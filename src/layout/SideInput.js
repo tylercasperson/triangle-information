@@ -6,12 +6,12 @@ const SideInput = (props) => {
       <br />
       <label htmlFor={'side' + props.side}>Side {props.side} length: </label>
       <input
-        style={{ width: '25vw' }}
+        style={{ width: '20vw' }}
         type='number'
-        placeholder='Numbers only (natural, negative, and decimals)'
+        placeholder='Numbers only (natural, and decimals)'
         id={'side' + props.side}
-        onKeyPress={props.keyDown}
         name={'side' + props.side}
+        onChange={props.onChange}
       />
       <br />
     </div>

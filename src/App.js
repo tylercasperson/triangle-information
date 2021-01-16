@@ -1,16 +1,12 @@
+import React from 'react';
 import './App.css';
-import SideInput from './layout/SideInput';
+
+import Calculations from './layout/Calculations.js';
 
 function App() {
-  const here = () => {
-    console.log(document.getElementById('sidea'));
-  };
-
   return (
     <div className='App'>
-      <SideInput side='a' keyDown={here()} />
-      <SideInput side='b' />
-      <SideInput side='c' />
+      <Calculations />
     </div>
   );
 }
