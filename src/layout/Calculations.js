@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import SideInput from './SideInput';
 
 const Calculations = () => {
-  const [sideA, setsideA] = useState('');
-  const [sideB, setsideB] = useState('');
-  const [sideC, setsideC] = useState('');
+  const [sideA, setSideA] = useState('');
+  const [sideB, setSideB] = useState('');
+  const [sideC, setSideC] = useState('');
   const [triangle, setTriangle] = useState('');
   const [message, setMessage] = useState('');
 
@@ -32,14 +32,14 @@ const Calculations = () => {
 
   const sideAnalysis = (side) => {
     switch (side) {
-      case 'a':
-        setsideA(document.getElementById('side' + side).value);
+      case 'A':
+        setSideA(document.getElementById('side' + side).value);
         break;
-      case 'b':
-        setsideB(document.getElementById('side' + side).value);
+      case 'B':
+        setSideB(document.getElementById('side' + side).value);
         break;
-      case 'c':
-        setsideC(document.getElementById('side' + side).value);
+      case 'C':
+        setSideC(document.getElementById('side' + side).value);
         break;
       default:
         return;
@@ -49,26 +49,26 @@ const Calculations = () => {
   return (
     <div>
       <SideInput
-        side='a'
+        side='A'
         onChange={() =>
           window.setTimeout(function () {
-            sideAnalysis('a');
+            sideAnalysis('A');
           }, 2)
         }
       />
       <SideInput
-        side='b'
+        side='B'
         onChange={() =>
           window.setTimeout(function () {
-            sideAnalysis('b');
+            sideAnalysis('B');
           }, 2)
         }
       />
       <SideInput
-        side='c'
+        side='C'
         onChange={() =>
           window.setTimeout(function () {
-            sideAnalysis('c');
+            sideAnalysis('C');
           }, 2)
         }
       />

@@ -4,7 +4,7 @@ const Instructions = () => {
   return (
     <div
       style={{
-        height: '5vh',
+        height: '7vh',
         display: 'flex',
         justifyContent: 'center',
       }}
