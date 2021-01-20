@@ -14,4 +14,4 @@
 
 ## I created the exact same thing as a C# application. Here is the link:
 
-[github link](https://github.com/tylercasperson/triangle-information-console)
+## [github link](https://github.com/tylercasperson/triangle-information-console)
