@@ -8,7 +8,7 @@ const SideInput = (props) => {
       <input
         style={{ width: '20vw' }}
         type='number'
-        placeholder='Numbers only (natural, and decimals)'
+        placeholder='Numbers only (natural, or decimals)'
         id={'side' + props.side}
         name={'side' + props.side}
         onChange={props.onChange}

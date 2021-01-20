@@ -1,6 +1,6 @@
 # Triangle Information using react
 
-## Here is the link to the live website: [Triangle Information in react](https://tylercasperson.github.io/triangle-information/)
+## Here is the link to the live website: [Triangle Information in react](https://tylercasperson.github.io/deployed-triangle-information/)
 
 ## I was asked to create an application to tell more information about a triangle. The user would input 3 numbers (the length of each side). My app was to let them know what type of triangle would be produced.
 
