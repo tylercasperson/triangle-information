@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/triangle-information/static/css/main.181bd63f.chunk.css",
+    "main.js": "/triangle-information/static/js/main.363529ef.chunk.js",
+    "main.js.map": "/triangle-information/static/js/main.363529ef.chunk.js.map",
+    "runtime-main.js": "/triangle-information/static/js/runtime-main.296cbf76.js",
+    "runtime-main.js.map": "/triangle-information/static/js/runtime-main.296cbf76.js.map",
+    "static/js/2.cd52e3dc.chunk.js": "/triangle-information/static/js/2.cd52e3dc.chunk.js",
+    "static/js/2.cd52e3dc.chunk.js.map": "/triangle-information/static/js/2.cd52e3dc.chunk.js.map",
+    "static/js/3.413be262.chunk.js": "/triangle-information/static/js/3.413be262.chunk.js",
+    "static/js/3.413be262.chunk.js.map": "/triangle-information/static/js/3.413be262.chunk.js.map",
+    "index.html": "/triangle-information/index.html",
+    "static/css/main.181bd63f.chunk.css.map": "/triangle-information/static/css/main.181bd63f.chunk.css.map",
+    "static/js/2.cd52e3dc.chunk.js.LICENSE.txt": "/triangle-information/static/js/2.cd52e3dc.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.296cbf76.js",
+    "static/js/2.cd52e3dc.chunk.js",
+    "static/css/main.181bd63f.chunk.css",
+    "static/js/main.363529ef.chunk.js"
+  ]
+}
