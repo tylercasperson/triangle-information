@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import SideInput from './SideInput';
+import InputBox from './InputBox';
 
 const Calculations = () => {
   const [sideA, setSideA] = useState('');
@@ -48,30 +48,38 @@ const Calculations = () => {
 
   return (
     <div>
-      <SideInput
-        side='A'
+      <InputBox
+        inputType='sideA'
+        inputLabel='Side A length'
+        placeholder='Numbers only (natural, or decimals)'
         onChange={() =>
           window.setTimeout(function () {
             sideAnalysis('A');
           }, 2)
         }
       />
-      <SideInput
-        side='B'
+      <InputBox
+        inputType='sideB'
+        inputLabel='Side B length'
+        placeholder='Numbers only (natural, or decimals)'
         onChange={() =>
           window.setTimeout(function () {
             sideAnalysis('B');
           }, 2)
         }
       />
-      <SideInput
-        side='C'
+      <InputBox
+        inputType='sideC'
+        inputLabel='Side C length'
+        placeholder='Numbers only (natural, or decimals)'
         onChange={() =>
           window.setTimeout(function () {
             sideAnalysis('C');
           }, 2)
         }
       />
+      <br />
+
       <br />
       {message}
     </div>

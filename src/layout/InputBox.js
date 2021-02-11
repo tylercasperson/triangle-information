@@ -4,13 +4,14 @@ const SideInput = (props) => {
   return (
     <div>
       <br />
-      <label htmlFor={'side' + props.side}>Side {props.side} length: </label>
+      <label htmlFor={props.inputType}>{props.inputLabel}: </label>
       <input
         style={{ width: '20vw' }}
         type='number'
-        placeholder='Numbers only (natural, or decimals)'
-        id={'side' + props.side}
-        name={'side' + props.side}
+        placeholder={props.placeholder}
+        // 'Numbers only (natural, or decimals)'
+        id={props.inputType}
+        name={props.inputType}
         onChange={props.onChange}
       />
       <br />
