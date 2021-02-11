@@ -10,9 +10,9 @@ const Calculations = () => {
 
   useEffect(() => {
     if (sideA !== '' && sideB !== '' && sideC !== '') {
-      if (sideA === sideB && sideA === sideC) {
+      if (sideA === sideB && sideA === sideC && sideB === sideC) {
         setTriangle('Equilateral');
-      } else if (sideA !== sideB && sideA !== sideC) {
+      } else if (sideA !== sideB && sideA !== sideC && sideB !== sideC) {
         setTriangle('Scaleneal');
       } else {
         setTriangle('Isosceles');
