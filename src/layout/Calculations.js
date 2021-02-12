@@ -17,6 +17,19 @@ const Calculations = () => {
       } else {
         setTriangle('Isosceles');
       }
+      SSS();
+      AAA();
+      AA(30, 60);
+      SAS(5, 49, 7);
+      SSA(13, 8, 31);
+      AAS(35, 105, 7);
+      ASA(87, 18.9, 42);
+
+      console.log(sideA);
+      console.log(sideB);
+      console.log(sideC);
+
+      SOHCAHTOA();
 
       if (
         +sideA + +sideB >= +sideC &&
@@ -30,20 +43,107 @@ const Calculations = () => {
     }
   }, [triangle, sideA, sideB, sideC]);
 
-  const sideAnalysis = (side) => {
+  const inputAnalysis = (side) => {
     switch (side) {
-      case 'A':
-        setSideA(document.getElementById('side' + side).value);
+      case 'sideA':
+        setSideA(document.getElementById(side).value);
         break;
-      case 'B':
-        setSideB(document.getElementById('side' + side).value);
+      case 'sideB':
+        setSideB(document.getElementById(side).value);
         break;
-      case 'C':
-        setSideC(document.getElementById('side' + side).value);
+      case 'sideC':
+        setSideC(document.getElementById(side).value);
         break;
       default:
         return;
     }
+  };
+
+  const SSS = () => {
+    console.log(
+      'COS(a): ',
+      (
+        Math.acos(
+          (sideB ** 2 + sideC ** 2 - sideA ** 2) / (2 * sideB * sideC)
+        ) *
+        (180 / Math.PI)
+      ).toFixed(2)
+    );
+    console.log(
+      'COS(b): ',
+      (
+        Math.acos(
+          (sideC ** 2 + sideA ** 2 - sideB ** 2) / (2 * sideC * sideA)
+        ) *
+        (180 / Math.PI)
+      ).toFixed(2)
+    );
+    console.log(
+      'COS(c): ',
+      (
+        Math.acos(
+          (sideA ** 2 + sideB ** 2 - sideC ** 2) / (2 * sideA * sideB)
+        ) *
+        (180 / Math.PI)
+      ).toFixed(2)
+    );
+  };
+
+  const AAA = () => {
+    console.log(
+      'I am sorry but you cannot solve the length of the sides by only providing the angles. You will need to provide the length of atleast 1 side.'
+    );
+  };
+
+  const AA = (angle1, angle2) => {
+    console.log(180 - (angle1 + angle2));
+  };
+
+  const SAS = (side1, angle, side2) => {
+    console.log(
+      'SAS: ',
+      Math.sqrt(
+        side1 ** 2 +
+          side2 ** 2 -
+          2 * side1 * side2 * Math.cos(angle * (Math.PI / 180))
+      ).toFixed(2)
+    );
+  };
+
+  const SSA = (side1, side2, angle) => {
+    console.log(
+      'SSA: ',
+      (
+        Math.asin((Math.sin(angle * (Math.PI / 180)) * side1) / side2) *
+        (180 / Math.PI)
+      ).toFixed(2)
+    );
+  };
+
+  const AAS = (angle1, angle2, side) => {
+    console.log(
+      'AAS: ',
+      (
+        (side / Math.sin(angle1 * (Math.PI / 180))) *
+        Math.sin(angle2 * (Math.PI / 180))
+      ).toFixed(2)
+    );
+  };
+
+  const ASA = (angle1, side, angle2) => {
+    const angle3 = 180 - angle1 - angle2;
+    console.log(
+      'ASA: ',
+      (
+        (side / Math.sin(angle3 * (Math.PI / 180))) *
+        Math.sin(angle2 * (Math.PI / 180))
+      ).toFixed(2)
+    );
+  };
+
+  const SOHCAHTOA = () => {
+    // might not need
+    console.log(Math.asin(sideA / sideB) * (180 / Math.PI));
   };
 
   return (
@@ -54,7 +154,7 @@ const Calculations = () => {
         placeholder='Numbers only (natural, or decimals)'
         onChange={() =>
           window.setTimeout(function () {
-            sideAnalysis('A');
+            inputAnalysis('sideA');
           }, 2)
         }
       />
@@ -64,7 +164,7 @@ const Calculations = () => {
         placeholder='Numbers only (natural, or decimals)'
         onChange={() =>
           window.setTimeout(function () {
-            sideAnalysis('B');
+            inputAnalysis('sideB');
           }, 2)
         }
       />
@@ -74,12 +174,10 @@ const Calculations = () => {
         placeholder='Numbers only (natural, or decimals)'
         onChange={() =>
           window.setTimeout(function () {
-            sideAnalysis('C');
+            inputAnalysis('sideC');
           }, 2)
         }
       />
-      <br />
-
       <br />
       {message}
     </div>
