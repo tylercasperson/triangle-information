@@ -36,21 +36,21 @@ const AngleCalculations = () => {
     angleAnalysis(parseFloat(angleC), 'C');
   }, [angleA, angleB, angleC]);
 
-  const inputAnalysis = (inputType) => {
-    switch (inputType) {
-      case 'angleA':
-        setAngleA(document.getElementById(inputType).value);
-        break;
-      case 'angleB':
-        setAngleB(document.getElementById(inputType).value);
-        break;
-      case 'angleC':
-        setAngleC(document.getElementById(inputType).value);
-        break;
-      default:
-        return;
-    }
-  };
+//   const inputAnalysis = (inputType) => {
+//     switch (inputType) {
+//       case 'angleA':
+//         setAngleA(document.getElementById(inputType).value);
+//         break;
+//       case 'angleB':
+//         setAngleB(document.getElementById(inputType).value);
+//         break;
+//       case 'angleC':
+//         setAngleC(document.getElementById(inputType).value);
+//         break;
+//       default:
+//         return;
+//     }
+//   };
 
   return (
     <div>
@@ -94,3 +94,37 @@ const AngleCalculations = () => {
 };
 
 export default AngleCalculations;
+
+
+
+
+<InputBox
+        inputType='sideA'
+        inputLabel='Side A length'
+        placeholder='Numbers only (natural, or decimals)'
+        onChange={() =>
+          window.setTimeout(function () {
+            inputAnalysis('sideA');
+          }, 2)
+        }
+      />
+      <InputBox
+        inputType='sideB'
+        inputLabel='Side B length'
+        placeholder='Numbers only (natural, or decimals)'
+        onChange={() =>
+          window.setTimeout(function () {
+            inputAnalysis('sideB');
+          }, 2)
+        }
+      />
+      <InputBox
+        inputType='sideC'
+        inputLabel='Side C length'
+        placeholder='Numbers only (natural, or decimals)'
+        onChange={() =>
+          window.setTimeout(function () {
+            inputAnalysis('sideC');
+          }, 2)
+        }
+      />

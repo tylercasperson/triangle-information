@@ -3,14 +3,14 @@ import './App.css';
 
 import Instructions from './layout/Instructions';
 import Calculations from './layout/Calculations.js';
-import AngleCalculations from './layout/AngleCalculations.js';
+// import AngleCalculations from './layout/AngleCalculations.js';
 
 function App() {
   return (
     <div className='App'>
       <Instructions />
       <Calculations />
-      <AngleCalculations />
+      {/* <AngleCalculations /> */}
     </div>
   );
 }
