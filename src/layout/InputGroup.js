@@ -15,19 +15,16 @@ const InputGroup = (props) => {
         <InputBox
           inputType='sideA'
           inputLabel='Side A length'
-          placeholder='Numbers only (natural, or decimals)'
           onChange={props.onChangeSideA}
         />
         <InputBox
           inputType='sideB'
           inputLabel='Side B length'
-          placeholder='Numbers only (natural, or decimals)'
           onChange={props.onChangeSideB}
         />
         <InputBox
           inputType='sideC'
           inputLabel='Side C length'
-          placeholder='Numbers only (natural, or decimals)'
           onChange={props.onChangeSideC}
         />
       </div>
@@ -40,7 +37,6 @@ const InputGroup = (props) => {
           <InputBox
             inputType='angleA'
             inputLabel='Angle A degrees'
-            placeholder='Numbers only (natural, or decimals)'
             value={props.angleAvalue}
             onChange={props.onChangeAngleA}
           />
@@ -54,7 +50,6 @@ const InputGroup = (props) => {
           <InputBox
             inputType='angleB'
             inputLabel='Angle B degrees'
-            placeholder='Numbers only (natural, or decimals)'
             value={props.angleBvalue}
             onChange={props.onChangeAngleB}
           />
@@ -68,7 +63,6 @@ const InputGroup = (props) => {
           <InputBox
             inputType='angleC'
             inputLabel='Angle C degrees'
-            placeholder='Numbers only (natural, or decimals)'
             value={props.angleCvalue}
             onChange={props.onChangeAngleC}
           />{' '}

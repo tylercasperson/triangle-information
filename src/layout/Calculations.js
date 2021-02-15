@@ -348,8 +348,8 @@ const Calculations = () => {
     }
   };
 
-  const rad = Math.PI / 180;
-  const deg = 180 / Math.PI;
+  const toRad = Math.PI / 180;
+  const toDeg = 180 / Math.PI;
 
   const SSS = () => {
     // cosA
@@ -357,8 +357,7 @@ const Calculations = () => {
       (
         Math.acos(
           (sideB ** 2 + sideC ** 2 - sideA ** 2) / (2 * sideB * sideC)
-        ) *
-        (180 / Math.PI)
+        ) * toDeg
       ).toFixed(2)
     );
     // cosB
@@ -366,16 +365,14 @@ const Calculations = () => {
       (
         Math.acos(
           (sideC ** 2 + sideA ** 2 - sideB ** 2) / (2 * sideC * sideA)
-        ) *
-        (180 / Math.PI)
+        ) * toDeg
       ).toFixed(2)
     );
     setAngleC(
       (
         Math.acos(
           (sideA ** 2 + sideB ** 2 - sideC ** 2) / (2 * sideA * sideB)
-        ) *
-        (180 / Math.PI)
+        ) * toDeg
       ).toFixed(2)
     );
   };
@@ -404,9 +401,7 @@ const Calculations = () => {
 
   const SAS = (side1, angle, side2) => {
     const missingSide = Math.sqrt(
-      side1 ** 2 +
-        side2 ** 2 -
-        2 * side1 * side2 * Math.cos(angle * (Math.PI / 180))
+      side1 ** 2 + side2 ** 2 - 2 * side1 * side2 * Math.cos(angle * toRad)
     ).toFixed(2);
 
     if (sideA === '') {
@@ -420,7 +415,7 @@ const Calculations = () => {
 
   const SSA = (side1, side2, angle) => {
     const missingAngle1 = (
-      Math.asin((Math.sin(angle * rad) / side1) * side2) * deg
+      Math.asin((Math.sin(angle * toRad) / side1) * side2) * toDeg
     ).toFixed(2);
 
     AA(angle, missingAngle1);
@@ -428,7 +423,7 @@ const Calculations = () => {
     const missingAngle2 = 180 - angle - missingAngle1;
 
     const missingSide =
-      (Math.sin(missingAngle2 * rad) * side1) / Math.sin(angle * rad);
+      (Math.sin(missingAngle2 * toRad) * side1) / Math.sin(angle * toRad);
 
     if (sideA === '') {
       setSideA(missingSide);
@@ -443,8 +438,8 @@ const Calculations = () => {
     AA(angle1, angle2);
 
     const missingSide = (
-      (side / Math.sin(angle1 * (Math.PI / 180))) *
-      Math.sin(angle2 * (Math.PI / 180))
+      (side / Math.sin(angle1 * toRad)) *
+      Math.sin(angle2 * toRad)
     ).toFixed(2);
 
     if (sideA === '') {
@@ -464,8 +459,8 @@ const Calculations = () => {
     const missingAngle = 180 - angle1 - angle2;
 
     const missingSide = (
-      (side / Math.sin(missingAngle * (Math.PI / 180))) *
-      Math.sin(angle2 * (Math.PI / 180))
+      (side / Math.sin(missingAngle * toRad)) *
+      Math.sin(angle2 * toRad)
     ).toFixed(2);
 
     if (sideA === '') {
@@ -520,7 +515,8 @@ const Calculations = () => {
       parseInt(angleC) === 0 ||
       angleA === '' ||
       angleB === '' ||
-      angleC === '' ? (
+      angleC === '' ||
+      message === 'These sides do not produce a valid triangle.' ? (
         <MessageGroup message={message} />
       ) : (
         <MessageGroup

@@ -1,0 +1,7 @@
+SSS;
+AAA;
+AA;
+SAS;
+SSA;
+AAS;
+ASA;
