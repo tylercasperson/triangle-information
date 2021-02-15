@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import InputGroup from './InputGroup';
+import CalculateButton from './CalculateButton';
 
 const Calculations = () => {
   const [sideA, setSideA] = useState('');
@@ -14,11 +15,29 @@ const Calculations = () => {
 
   const [triangle, setTriangle] = useState('');
   const [message, setMessage] = useState('');
+  const [calculate, setCalculate] = useState('');
+
+  const reset = () => {
+    setSideA('');
+    setSideB('');
+    setSideC('');
+    setAngleA('');
+    setAngleB('');
+    setAngleC('');
+    setAngleAtype('');
+    setAngleBtype('');
+    setAngleCtype('');
+    setTriangle('');
+    setMessage('');
+    setCalculate('');
+  };
 
   useEffect(() => {
     angleAnalysis(parseInt(angleA), 'A');
     angleAnalysis(parseInt(angleB), 'B');
     angleAnalysis(parseInt(angleC), 'C');
+
+    ASA(76, 9, 34);
 
     if (sideA !== '' && sideB !== '' && sideC !== '') {
       if (sideA === sideB && sideA === sideC && sideB === sideC) {
@@ -30,11 +49,13 @@ const Calculations = () => {
       }
 
       // SSS();
-      SAS(sideA, angleC, sideB);
       // AAA();
       // AA(30, 60);
+      // SAS(sideA, angleC, sideB);
       // SAS(5, 49, 7);
-      // SSA(13, 8, 31);
+      // SSA(8, 13, 31);
+      // AAS(62, 35, 7);
+
       // AAS(35, 105, 7);
       // ASA(87, 18.9, 42);
 
@@ -58,7 +79,7 @@ const Calculations = () => {
         setMessage('These sides do not produce a valid triangle.');
       }
     }
-  }, [sideA, sideB, sideC, angleA, angleB, angleC]);
+  }, [calculate]);
 
   const angleAnalysis = (angle, abc) => {
     const whichAngle = (angleType) => {
@@ -320,6 +341,9 @@ const Calculations = () => {
     }
   };
 
+  const rad = Math.PI / 180;
+  const deg = 180 / Math.PI;
+
   const SSS = () => {
     // cosA
     setAngleA(
@@ -363,14 +387,14 @@ const Calculations = () => {
     if (sideA === '' && sideB === '' && sideC === '') {
       AAA();
     } else {
-      const angle3 = 180 - angle1 - angle2;
+      const missingAngle = 180 - angle1 - angle2;
 
       if (angleA === '') {
-        setAngleA(angle3);
+        setAngleA(missingAngle);
       } else if (angleB === '') {
-        setAngleB(angle3);
+        setAngleB(missingAngle);
       } else if (angleC === '') {
-        setAngleC(angle3);
+        setAngleC(missingAngle);
       }
     }
   };
@@ -392,39 +416,64 @@ const Calculations = () => {
   };
 
   const SSA = (side1, side2, angle) => {
-    console.log(
-      'SSA: ',
-      (
-        Math.asin((Math.sin(angle * (Math.PI / 180)) * side1) / side2) *
-        (180 / Math.PI)
-      ).toFixed(2)
-    );
+    const missingAngle1 = (
+      Math.asin((Math.sin(angle * rad) / side1) * side2) * deg
+    ).toFixed(2);
+
+    console.log('missingAngle: ', missingAngle1);
+
+    AA(angle, missingAngle1);
+    // need to find a way to combine AA and missing angle 2
+    const missingAngle2 = 180 - angle - missingAngle1;
+
+    const missingSide =
+      (Math.sin(missingAngle2 * rad) * side1) / Math.sin(angle * rad);
+
+    if (sideA === '') {
+      setSideA(missingSide);
+    } else if (sideB === '') {
+      setSideB(missingSide);
+    } else if (sideC === '') {
+      setSideC(missingSide);
+    }
   };
 
   const AAS = (angle1, angle2, side) => {
-    console.log(
-      'AAS: ',
-      (
-        (side / Math.sin(angle1 * (Math.PI / 180))) *
-        Math.sin(angle2 * (Math.PI / 180))
-      ).toFixed(2)
-    );
+    AA(angle1, angle2);
+
+    const missingSide = (
+      (side / Math.sin(angle1 * (Math.PI / 180))) *
+      Math.sin(angle2 * (Math.PI / 180))
+    ).toFixed(2);
+
+    if (sideA === '') {
+      setSideA(missingSide);
+    } else if (sideB === '') {
+      setSideB(missingSide);
+    } else if (sideC === '') {
+      setSideC(missingSide);
+    }
+
+    SSA(side, missingSide, angle1);
   };
 
   const ASA = (angle1, side, angle2) => {
-    const angle3 = 180 - angle1 - angle2;
-    console.log(
-      'ASA: ',
-      (
-        (side / Math.sin(angle3 * (Math.PI / 180))) *
-        Math.sin(angle2 * (Math.PI / 180))
-      ).toFixed(2)
-    );
-  };
+    AA(angle1, angle2);
 
-  const SOHCAHTOA = () => {
-    // might not need
-    console.log(Math.asin(sideA / sideB) * (180 / Math.PI));
+    const missingAngle = 180 - angle1 - angle2;
+
+    const missingSide = (
+      (side / Math.sin(missingAngle * (Math.PI / 180))) *
+      Math.sin(angle2 * (Math.PI / 180))
+    ).toFixed(2);
+
+    if (sideA === '') {
+      setSideA(missingSide);
+    } else if (sideB === '') {
+      setSideB(missingSide);
+    } else if (sideC === '') {
+      setSideC(missingSide);
+    }
   };
 
   return (
@@ -474,6 +523,14 @@ const Calculations = () => {
       <div>AngleA: {angleA}</div>
       <div>AngleB: {angleB}</div>
       <div>AngleC: {angleC}</div>
+      <br />
+      <br />
+      <CalculateButton
+        onClick={() => {
+          reset();
+          setCalculate(1);
+        }}
+      />
     </div>
   );
 };
