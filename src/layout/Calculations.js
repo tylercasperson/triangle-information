@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import InputGroup from './InputGroup';
+import MessageGroup from './MessageGroup';
 import CalculateButton from './CalculateButton';
 
 const Calculations = () => {
@@ -37,7 +38,7 @@ const Calculations = () => {
     angleAnalysis(parseInt(angleB), 'B');
     angleAnalysis(parseInt(angleC), 'C');
 
-    ASA(76, 9, 34);
+    missingData();
 
     if (sideA !== '' && sideB !== '' && sideC !== '') {
       if (sideA === sideB && sideA === sideC && sideB === sideC) {
@@ -48,17 +49,6 @@ const Calculations = () => {
         setTriangle('Isosceles');
       }
 
-      // SSS();
-      // AAA();
-      // AA(30, 60);
-      // SAS(sideA, angleC, sideB);
-      // SAS(5, 49, 7);
-      // SSA(8, 13, 31);
-      // AAS(62, 35, 7);
-
-      // AAS(35, 105, 7);
-      // ASA(87, 18.9, 42);
-
       console.log(sideA);
       console.log(sideB);
       console.log(sideC);
@@ -67,19 +57,28 @@ const Calculations = () => {
       console.log(angleB);
       console.log(angleC);
 
-      // SOHCAHTOA();
-
       if (
         +sideA + +sideB >= +sideC &&
         +sideA + +sideC >= +sideB &&
         +sideB + +sideC >= +sideA
       ) {
-        setMessage(`These side lengths produce a valid ${triangle} triangle.`);
+        console.log(parseInt(angleA) === 0 || angleB === 0 || angleC === 0);
+        if (
+          parseInt(angleA) === 0 ||
+          parseInt(angleB) === 0 ||
+          parseInt(angleC) === 0
+        ) {
+          setMessage('One of the sides is too long to be a valid triangle.');
+        } else {
+          setMessage(
+            `These side lengths produce a valid ${triangle} triangle.`
+          );
+        }
       } else {
         setMessage('These sides do not produce a valid triangle.');
       }
     }
-  }, [calculate]);
+  }, [calculate, sideA, sideB, sideC, angleA, angleB, angleC]);
 
   const angleAnalysis = (angle, abc) => {
     const whichAngle = (angleType) => {
@@ -126,6 +125,14 @@ const Calculations = () => {
   };
 
   const missingData = () => {
+    console.log('sa: ', sideA);
+    console.log('sb: ', sideB);
+    console.log('sc: ', sideC);
+
+    console.log('aa: ', angleA);
+    console.log('ab: ', angleB);
+    console.log('ac: ', angleC);
+
     const data =
       // all three
       sideA !== '' &&
@@ -352,7 +359,7 @@ const Calculations = () => {
           (sideB ** 2 + sideC ** 2 - sideA ** 2) / (2 * sideB * sideC)
         ) *
         (180 / Math.PI)
-      ).toFixed(4)
+      ).toFixed(2)
     );
     // cosB
     setAngleB(
@@ -361,7 +368,7 @@ const Calculations = () => {
           (sideC ** 2 + sideA ** 2 - sideB ** 2) / (2 * sideC * sideA)
         ) *
         (180 / Math.PI)
-      ).toFixed(4)
+      ).toFixed(2)
     );
     setAngleC(
       (
@@ -369,12 +376,8 @@ const Calculations = () => {
           (sideA ** 2 + sideB ** 2 - sideC ** 2) / (2 * sideA * sideB)
         ) *
         (180 / Math.PI)
-      ).toFixed(4)
+      ).toFixed(2)
     );
-    console.log('SSS: ');
-    console.log('angleA: ', angleA);
-    console.log('angleB: ', angleB);
-    console.log('angleC: ', angleC);
   };
 
   const AAA = () => {
@@ -419,8 +422,6 @@ const Calculations = () => {
     const missingAngle1 = (
       Math.asin((Math.sin(angle * rad) / side1) * side2) * deg
     ).toFixed(2);
-
-    console.log('missingAngle: ', missingAngle1);
 
     AA(angle, missingAngle1);
     // need to find a way to combine AA and missing angle 2
@@ -514,21 +515,34 @@ const Calculations = () => {
         messageAngleC={angleCtype}
       />
 
-      <br />
-      {message}
-      <br />
-      <div>SideA: {sideA}</div>
-      <div>SideB: {sideB}</div>
-      <div>SideC: {sideC}</div>
-      <div>AngleA: {angleA}</div>
-      <div>AngleB: {angleB}</div>
-      <div>AngleC: {angleC}</div>
+      {parseInt(angleA) === 0 ||
+      parseInt(angleB) === 0 ||
+      parseInt(angleC) === 0 ||
+      angleA === '' ||
+      angleB === '' ||
+      angleC === '' ? (
+        <MessageGroup message={message} />
+      ) : (
+        <MessageGroup
+          message={message}
+          sideA={'SideA: ' + sideA}
+          sideB={'SideB: ' + sideB}
+          sideC={'SideC: ' + sideC}
+          angleA={'AngleA: ' + angleA}
+          angleAtype={angleAtype}
+          angleB={'AngleB: ' + angleB}
+          angleBtype={angleBtype}
+          angleC={'AngleC: ' + angleC}
+          angleCtype={angleCtype}
+        />
+      )}
       <br />
       <br />
       <CalculateButton
         onClick={() => {
-          reset();
-          setCalculate(1);
+          // reset();
+          calculate === 1 ? setCalculate(0) : setCalculate(1);
+          missingData();
         }}
       />
     </div>
