@@ -18,100 +18,81 @@ const Calculations = () => {
   const [message, setMessage] = useState('');
   const [calculate, setCalculate] = useState('');
 
-  const [triangle1, setTriangle1] = useState([]);
+  const [triangle1, setTriangle1] = useState(['hello', 'bye']);
   const [triangle2, setTriangle2] = useState([]);
   const [triangle3, setTriangle3] = useState([]);
 
   useEffect(() => {
-    // console.log('before');
-    // console.log('sa: ', sideA);
-    // console.log('sb: ', sideB);
-    // console.log('sc: ', sideC);
+    if (
+      message === `These side lengths produce a valid ${triangle} triangle.`
+    ) {
+      angleAnalysis(parseInt(angleA), 'A');
+      angleAnalysis(parseInt(angleB), 'B');
+      angleAnalysis(parseInt(angleC), 'C');
+    }
 
-    // console.log('aa: ', angleA);
-    // console.log('ab: ', angleB);
-    // console.log('ac: ', angleC);
+    console.log(triangle1[0]);
+    console.log(triangle1);
 
-    missingData();
+    if (
+      sideA === '' ||
+      sideB === '' ||
+      sideC === '' ||
+      angleA === '' ||
+      angleB === '' ||
+      angleC === ''
+    ) {
+      missingData();
+    }
 
-    console.log(
-      'a: ',
-      sideA,
-      'b: ',
-      sideB,
-      'c: ',
-      sideC,
-      'A: ',
-      angleA,
-      'B: ',
-      angleB,
-      'C: ',
-      angleC
-    );
+    if (sideA !== '' && sideB !== '' && sideC !== '') {
+      // if (angleA !== '') {
+      //   let placeholder = angleA;
+      //   SSS();
+      //   setAngleA(placeholder);
+      //   console.log('aaaaaaa');
+      // }
+      // if (angleB !== '') {
+      //   let placeholder = angleB;
+      //   SSS();
+      //   setAngleB(placeholder);
+      //   console.log('bbbbbbb');
+      // }
+      // if (angleC !== '') {
+      //   let placeholder = angleC;
+      //   SSS();
+      //   setAngleC(placeholder);
+      //   console.log('cccccc');
+      // }
 
-    // if (
-    //   message === `These side lengths produce a valid ${triangle} triangle.`
-    // ) {
-    //   angleAnalysis(parseInt(angleA), 'A');
-    //   angleAnalysis(parseInt(angleB), 'B');
-    //   angleAnalysis(parseInt(angleC), 'C');
-    // }
-    // if (
-    //   sideA === '' ||
-    //   sideB === '' ||
-    //   sideC === '' ||
-    //   angleA === '' ||
-    //   angleB === '' ||
-    //   angleC === ''
-    // ) {
-    // missingData();
-    // }
-    // if (sideA !== '' && sideB !== '' && sideC !== '') {
-    // if (angleA !== '') {
-    //   let placeholder = angleA;
-    //   SSS();
-    //   setAngleA(placeholder);
-    //   console.log('aaaaaaa');
-    // }
-    // if (angleB !== '') {
-    //   let placeholder = angleB;
-    //   SSS();
-    //   setAngleB(placeholder);
-    //   console.log('bbbbbbb');
-    // }
-    // if (angleC !== '') {
-    //   let placeholder = angleC;
-    //   SSS();
-    //   setAngleC(placeholder);
-    //   console.log('cccccc');
-    // }
-    // if (sideA === sideB && sideA === sideC && sideB === sideC) {
-    //   setTriangle('Equilateral');
-    // } else if (sideA !== sideB && sideA !== sideC && sideB !== sideC) {
-    //   setTriangle('Scaleneal');
-    // } else {
-    //   setTriangle('Isosceles');
-    // }
-    //   if (
-    //     +sideA + +sideB >= +sideC &&
-    //     +sideA + +sideC >= +sideB &&
-    //     +sideB + +sideC >= +sideA
-    //   ) {
-    //     if (
-    //       parseInt(angleA) === 0 ||
-    //       parseInt(angleB) === 0 ||
-    //       parseInt(angleC) === 0
-    //     ) {
-    //       setMessage('One of the sides is too long to be a valid triangle.');
-    //     } else {
-    //       setMessage(
-    //         `These side lengths produce a valid ${triangle} triangle.`
-    //       );
-    //     }
-    //   } else {
-    //     setMessage('These sides do not produce a valid triangle.');
-    //   }
-    // }
+      if (sideA === sideB && sideA === sideC && sideB === sideC) {
+        setTriangle('Equilateral');
+      } else if (sideA !== sideB && sideA !== sideC && sideB !== sideC) {
+        setTriangle('Scaleneal');
+      } else {
+        setTriangle('Isosceles');
+      }
+
+      if (
+        +sideA + +sideB >= +sideC &&
+        +sideA + +sideC >= +sideB &&
+        +sideB + +sideC >= +sideA
+      ) {
+        if (
+          parseInt(angleA) === 0 ||
+          parseInt(angleB) === 0 ||
+          parseInt(angleC) === 0
+        ) {
+          setMessage('One of the sides is too long to be a valid triangle.');
+        } else {
+          setMessage(
+            `These side lengths produce a valid ${triangle} triangle.`
+          );
+        }
+      } else {
+        setMessage('These sides do not produce a valid triangle.');
+      }
+    }
   }, [calculate, triangle, sideA, sideB, sideC, angleA, angleB, angleC]);
 
   const angleAnalysis = (angle, abc) => {
@@ -159,13 +140,13 @@ const Calculations = () => {
   };
 
   const missingData = () => {
-    // console.log('sa: ', sideA);
-    // console.log('sb: ', sideB);
-    // console.log('sc: ', sideC);
+    console.log('sa: ', sideA);
+    console.log('sb: ', sideB);
+    console.log('sc: ', sideC);
 
-    // console.log('aa: ', angleA);
-    // console.log('ab: ', angleB);
-    // console.log('ac: ', angleC);
+    console.log('aa: ', angleA);
+    console.log('ab: ', angleB);
+    console.log('ac: ', angleC);
 
     const data =
       // all three
@@ -313,7 +294,7 @@ const Calculations = () => {
         ? 'CAc'
         : null;
 
-    // console.log('data: ', data);
+    console.log('data: ', data);
 
     switch (data) {
       // all three
@@ -387,97 +368,31 @@ const Calculations = () => {
     }
   };
 
-  const setCalculation = (match, comparison, calculation, set) => {
-    const optionA = comparison === 'side' ? sideA : angleA;
-    const optionB = comparison === 'side' ? sideB : angleB;
-    const optionC = comparison === 'side' ? sideC : angleC;
-
-    if (match === optionA) {
-      set === 'side' ? setSideA(calculation) : setAngleA(calculation);
-    } else if (match === optionB) {
-      set === 'side' ? setSideB(calculation) : setAngleB(calculation);
-    } else if (match === optionC) {
-      set === 'side' ? setSideC(calculation) : setAngleC(calculation);
-    }
-
-    console.log('option: ', optionB, 'match: ', match);
-    console.log('a: ', optionA === match);
-    console.log('b: ', optionB === match);
-    console.log('c: ', optionC === match);
-
-    console.log(
-      'a: ',
-      sideA,
-      'b: ',
-      sideB,
-      'c: ',
-      sideC,
-      'A: ',
-      angleA,
-      'B: ',
-      angleB,
-      'C: ',
-      angleC
-    );
-
-    console.log(
-      'match: ',
-      match,
-      'comparison: ',
-      comparison,
-      'calculation: ',
-      calculation,
-      'set: ',
-      set
-    );
-  };
-
   const toRad = Math.PI / 180;
   const toDeg = 180 / Math.PI;
 
-  const angleLawOfSines = (side1, angle1, side2) => {
-    console.log('angleLawOfSines');
-    console.log(side1);
-    console.log(angle1);
-    console.log(side2);
-    console.log(
-      'answer: ',
-      Math.asin((Math.sin(angle1 * toRad) * side1) / side2) * toDeg
-    );
-    return Math.asin((Math.sin(angle1 * toRad) * side1) / side2) * toDeg;
-  };
-
-  const angleLowOfCosines = (side1, side2, side3) => {
-    return (
-      Math.acos((side2 ** 2 + side3 ** 2 - side1 ** 2) / (2 * side2 * side3)) *
-      toDeg
-    );
-  };
-
-  const AA = (angle1, angle2) => {
-    return 180 - angle1 - angle2;
-  };
-
-  const sideLawOfCosine = (side1, side2, angle3) => {
-    console.log('sideLawOfCosine');
-    // already checked
-
-    return Math.sqrt(
-      side1 ** 2 + side2 ** 2 - 2 * side1 * side2 * Math.cos(angle3 * toRad)
-    );
-  };
-
-  const sideLawOfSine = (side1, angle1, angle2) => {
-    console.log('sideLawOfSine');
-    // already checked
-    return (Math.sin(angle2 * toRad) * side1) / Math.sin(angle1 * toRad);
-  };
-
   const SSS = () => {
-    console.log('SSS');
-    setAngleA(angleLowOfCosines(sideA, sideB, sideC));
-    setAngleB(angleLowOfCosines(sideB, sideA, sideC));
-    setAngleC(angleLowOfCosines(sideC, sideA, sideB));
+    setAngleA(
+      (
+        Math.acos(
+          (sideB ** 2 + sideC ** 2 - sideA ** 2) / (2 * sideB * sideC)
+        ) * toDeg
+      ).toFixed(2)
+    );
+    setAngleB(
+      (
+        Math.acos(
+          (sideC ** 2 + sideA ** 2 - sideB ** 2) / (2 * sideC * sideA)
+        ) * toDeg
+      ).toFixed(2)
+    );
+    setAngleC(
+      (
+        Math.acos(
+          (sideA ** 2 + sideB ** 2 - sideC ** 2) / (2 * sideA * sideB)
+        ) * toDeg
+      ).toFixed(2)
+    );
   };
 
   const AAA = () => {
@@ -488,46 +403,98 @@ const Calculations = () => {
 
   const SAS = (side1, angle, side2) => {
     console.log('SAS');
+    const missingSide = Math.sqrt(
+      side1 ** 2 + side2 ** 2 - 2 * side1 * side2 * Math.cos(angle * toRad)
+    ).toFixed(2);
 
-    const missingSide = sideLawOfCosine(side1, side2, angle);
-    const missingAngle1 = angleLawOfSines(side1, angle, missingSide);
-    const missingAngle2 = AA(angle, missingAngle1);
-    setCalculation('', 'side', missingSide, 'side');
-    setCalculation(side1, 'side', missingAngle1, 'angle');
-    setCalculation(side2, 'side', missingAngle2, 'angle');
+    const missingAngle1 = (Math.sin(angle * toRad) * 5) / missingSide;
+
+    console.log('missingAngle1: ', missingAngle1);
+
+    if (sideA === '') {
+      setSideA(missingSide);
+    } else if (sideB === '') {
+      setSideB(missingSide);
+    } else if (sideC === '') {
+      setSideC(missingSide);
+    }
   };
 
   const SSA = (side1, side2, angle) => {
-    console.log('SSA');
+    const missingAngle1 = (
+      Math.asin((Math.sin(angle * toRad) / side1) * side2) * toDeg
+    ).toFixed(2);
 
-    const missingAngle1 = angleLawOfSines(side2, angle, side1);
-    const missingAngle2 = AA(angle, missingAngle1);
-    const missingSide = sideLawOfSine(side1, angle, missingAngle2);
-    setCalculation(side2, 'side', missingAngle1, 'angle');
-    setCalculation('', 'side', missingSide, 'side');
-    setCalculation('', 'angle', missingAngle2, 'angle');
+    const missingAngle2 = 180 - angle - missingAngle1;
+
+    const missingSide = (
+      (Math.sin(missingAngle2 * toRad) * side1) /
+      Math.sin(angle * toRad)
+    ).toFixed(2);
+
+    if (sideA === '') {
+      setSideA(missingSide);
+    } else if (sideB === '') {
+      setSideB(missingSide);
+    } else if (sideC === '') {
+      setSideC(missingSide);
+    }
   };
 
   const AAS = (angle1, angle2, side) => {
-    console.log('AAS');
+    const missingAngle = 180 - angle1 - angle2;
 
-    const missingAngle = AA(angle1, angle2);
-    const missingSide1 = sideLawOfSine(side, angle1, angle2);
-    const missingSide2 = sideLawOfCosine(missingSide1, side, missingAngle);
-    setCalculation('', 'angle', missingAngle, 'angle');
-    setCalculation(angle2, 'angle', missingSide1, 'side');
-    setCalculation('', 'angle', missingSide2, 'side');
+    const missingSide1 = (
+      (side * Math.sin(angle2 * toRad)) /
+      Math.sin(angle1 * toRad)
+    ).toFixed(2);
+
+    const missingSide2 = (
+      (side * Math.sin(missingAngle * toRad)) /
+      Math.sin(angle1 * toRad)
+    ).toFixed(2);
+
+    if (angleA === '') {
+      setAngleA(missingAngle);
+      setSideC(missingSide1);
+      setSideA(missingSide2);
+    } else if (angleB === '') {
+      setAngleB(missingAngle);
+      setSideA(missingSide1);
+      setSideB(missingSide2);
+    } else if (angleC === '') {
+      setAngleC(missingAngle);
+      setSideB(missingSide1);
+      setSideC(missingSide2);
+    }
   };
 
   const ASA = (angle1, side, angle2) => {
-    console.log('ASA');
+    const missingAngle = 180 - angle1 - angle2;
 
-    const missingAngle = AA(angle1, angle2);
-    const missingSide1 = sideLawOfSine(side, missingAngle, angle2);
-    const missingSide2 = sideLawOfCosine(missingSide1, side, angle1);
-    setCalculation('', 'angle', missingAngle, 'angle');
-    setCalculation(angle2, 'angle', missingSide1, 'side');
-    setCalculation(angle1, 'angle', missingSide2, 'side');
+    const missingSide1 = (
+      (side / Math.sin(missingAngle * toRad)) *
+      Math.sin(angle1 * toRad)
+    ).toFixed(2);
+
+    const missingSide2 = (
+      (side / Math.sin(missingAngle * toRad)) *
+      Math.sin(angle2 * toRad)
+    ).toFixed(2);
+
+    if (angleA === '') {
+      setAngleC(missingAngle);
+      setSideA(missingSide1);
+      setSideB(missingSide2);
+    } else if (angleB === '') {
+      setAngleA(missingAngle);
+      setSideB(missingSide1);
+      setSideC(missingSide2);
+    } else if (angleC === '') {
+      setAngleB(missingAngle);
+      setSideC(missingSide1);
+      setSideA(missingSide2);
+    }
   };
 
   return (
@@ -601,15 +568,6 @@ const Calculations = () => {
           missingData();
         }}
       />
-      <br />
-      <br />
-      {/* <textarea rows='30' cols='40'></textarea>
-      <div */}
-      <div>
-        SSA; ['',8,13,'',31,''] [15.52,8,13,92.2,31,56.8] SAS; ['',5,7,49,'','']
-        [5.3,5,7,49,45.4,85.6] AAS; ['','',7,35,'',62] [4.55,7.87,7,35,83,62]
-        ASA; ['','',9,76,34,''] [9.29,5.36,9,76,34,70]
-      </div>
     </div>
   );
 };
