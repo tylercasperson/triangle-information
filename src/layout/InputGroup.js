@@ -15,16 +15,19 @@ const InputGroup = (props) => {
         <InputBox
           inputType='sideA'
           inputLabel='Side A length'
+          // value={props.sideAvalue}
           onChange={props.onChangeSideA}
         />
         <InputBox
           inputType='sideB'
           inputLabel='Side B length'
+          // value={props.sideBvalue}
           onChange={props.onChangeSideB}
         />
         <InputBox
           inputType='sideC'
           inputLabel='Side C length'
+          // value={props.sideCvalue}
           onChange={props.onChangeSideC}
         />
       </div>
@@ -37,7 +40,7 @@ const InputGroup = (props) => {
           <InputBox
             inputType='angleA'
             inputLabel='Angle A degrees'
-            value={props.angleAvalue}
+            // value={props.angleAvalue}
             onChange={props.onChangeAngleA}
           />
           <div style={{ marginLeft: '2vw' }}>{props.messageAngleA}</div>
@@ -50,7 +53,7 @@ const InputGroup = (props) => {
           <InputBox
             inputType='angleB'
             inputLabel='Angle B degrees'
-            value={props.angleBvalue}
+            // value={props.angleBvalue}
             onChange={props.onChangeAngleB}
           />
           <div style={{ marginLeft: '2vw' }}>{props.messageAngleB}</div>
@@ -63,7 +66,7 @@ const InputGroup = (props) => {
           <InputBox
             inputType='angleC'
             inputLabel='Angle C degrees'
-            value={props.angleCvalue}
+            // value={props.angleCvalue}
             onChange={props.onChangeAngleC}
           />{' '}
           <div style={{ marginLeft: '2vw' }}>{props.messageAngleC}</div>

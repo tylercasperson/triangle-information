@@ -368,6 +368,38 @@ const Calculations = () => {
     }
   };
 
+  const setCalculation = (match, comparison, calculation, set) => {
+    let optionA = comparison === 'side' ? sideA : angleA;
+    let optionB = comparison === 'side' ? sideB : angleB;
+    let optionC = comparison === 'side' ? sideC : angleC;
+    let positionA = set === 'side' ? triangle1[0] : triangle1[3];
+    let positionB = set === 'side' ? triangle1[1] : triangle1[4];
+    let positionC = set === 'side' ? triangle1[2] : triangle1[5];
+
+    if (match === optionA) {
+      if (positionA.length === 0) {
+        set === 'side' ? setSideA(calculation) : setAngleA(calculation);
+        comparison === 'side'
+          ? (triangle1[0] = calculation)
+          : (triangle1[3] = calculation);
+      }
+    } else if (match === optionB) {
+      if (positionB.lemgth === 0) {
+        set === 'side' ? setSideB(calculation) : setAngleB(calculation);
+        comparison === 'side'
+          ? (triangle1[1] = calculation)
+          : (triangle1[4] = calculation);
+      }
+    } else if (match === optionC) {
+      if (positionC.length === 0) {
+        set === 'side' ? setSideC(calculation) : setAngleC(calculation);
+        comparison === 'side'
+          ? (triangle1[2] = calculation)
+          : (triangle1[5] = calculation);
+      }
+    }
+  };
+
   const toRad = Math.PI / 180;
   const toDeg = 180 / Math.PI;
 

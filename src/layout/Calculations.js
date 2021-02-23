@@ -10,30 +10,21 @@ const Calculations = () => {
   const [angleA, setAngleA] = useState('');
   const [angleB, setAngleB] = useState('');
   const [angleC, setAngleC] = useState('');
+
   const [angleAtype, setAngleAtype] = useState('');
   const [angleBtype, setAngleBtype] = useState('');
   const [angleCtype, setAngleCtype] = useState('');
 
   const [triangle, setTriangle] = useState('');
   const [message, setMessage] = useState('');
-  const [calculate, setCalculate] = useState('');
+  const [calculate, setCalculate] = useState(0);
 
-  const [triangle1, setTriangle1] = useState([]);
+  const [originalInput, setOriginalInput] = useState(['', '', '', '', '', '']);
+  const [triangle1, setTriangle1] = useState(['', '', '', '', '', '']);
   const [triangle2, setTriangle2] = useState([]);
   const [triangle3, setTriangle3] = useState([]);
 
-  useEffect(() => {
-    // console.log('before');
-    // console.log('sa: ', sideA);
-    // console.log('sb: ', sideB);
-    // console.log('sc: ', sideC);
-
-    // console.log('aa: ', angleA);
-    // console.log('ab: ', angleB);
-    // console.log('ac: ', angleC);
-
-    missingData();
-
+  const logValues = () => {
     console.log(
       'a: ',
       sideA,
@@ -48,71 +39,75 @@ const Calculations = () => {
       'C: ',
       angleC
     );
+  };
 
-    // if (
-    //   message === `These side lengths produce a valid ${triangle} triangle.`
-    // ) {
-    //   angleAnalysis(parseInt(angleA), 'A');
-    //   angleAnalysis(parseInt(angleB), 'B');
-    //   angleAnalysis(parseInt(angleC), 'C');
+  useEffect(() => {
+    missingData();
+    logValues();
+
+    whichTriangle();
+
+    console.log('hereL ', triangle1);
+  }, [calculate]);
+
+  //triangle, angleA, angleB, angleC
+
+  const whichTriangle = () => {
+    if (sideA === sideB && sideA === sideC && sideB === sideC) {
+      setTriangle('Equilateral');
+    } else if (sideA !== sideB && sideA !== sideC && sideB !== sideC) {
+      setTriangle('Scaleneal');
+    } else {
+      setTriangle('Isosceles');
+    }
+
+    angleAnalysis(parseInt(angleA), 'A');
+    angleAnalysis(parseInt(angleB), 'B');
+    angleAnalysis(parseInt(angleC), 'C');
+
+    console.log('t1: ', triangle1);
+    if (triangle1.length === 6) {
+      if (
+        +sideA + +sideB >= +sideC &&
+        +sideA + +sideC >= +sideB &&
+        +sideB + +sideC >= +sideA
+      ) {
+        if (angleA + angleB + angleC === 180) {
+          setMessage(
+            `These side lengths produce a valid ${triangle} triangle.`
+          );
+        } else {
+          setMessage(
+            'The angles do not add up to 180 degrees so the data provided does not make this a valid triangle.'
+          );
+        }
+      } else {
+        setMessage(
+          'The sides do not connect. One is too long or too short to be a valid triangle.'
+        );
+      }
+    } else {
+      setMessage('More data is needed.');
+    }
+  };
+
+  const triangleData = () => {
+    // let sideOne =
+    //   originalInput !== ''
+    //   // ? (document.getElementById('sideA').value = { sideA })
+    //     : null;
+    // let emptyArr = originalInput.filter((empty) => empty === '').length;
+    // console.log(emptyArr);
+    // if (emptyArr === 3 && triangle1.length === 0) {
+    // setSideA(originalInput[0]);
+    // setSideB(originalInput[1]);
+    // setSideC(originalInput[2]);
+    // setAngleA(originalInput[3]);
+    // setAngleB(originalInput[4]);
+    // setAngleC(originalInput[5]);
+    // setTriangle1([sideA, sideB, sideC, angleA, angleB, angleC]);
     // }
-    // if (
-    //   sideA === '' ||
-    //   sideB === '' ||
-    //   sideC === '' ||
-    //   angleA === '' ||
-    //   angleB === '' ||
-    //   angleC === ''
-    // ) {
-    // missingData();
-    // }
-    // if (sideA !== '' && sideB !== '' && sideC !== '') {
-    // if (angleA !== '') {
-    //   let placeholder = angleA;
-    //   SSS();
-    //   setAngleA(placeholder);
-    //   console.log('aaaaaaa');
-    // }
-    // if (angleB !== '') {
-    //   let placeholder = angleB;
-    //   SSS();
-    //   setAngleB(placeholder);
-    //   console.log('bbbbbbb');
-    // }
-    // if (angleC !== '') {
-    //   let placeholder = angleC;
-    //   SSS();
-    //   setAngleC(placeholder);
-    //   console.log('cccccc');
-    // }
-    // if (sideA === sideB && sideA === sideC && sideB === sideC) {
-    //   setTriangle('Equilateral');
-    // } else if (sideA !== sideB && sideA !== sideC && sideB !== sideC) {
-    //   setTriangle('Scaleneal');
-    // } else {
-    //   setTriangle('Isosceles');
-    // }
-    //   if (
-    //     +sideA + +sideB >= +sideC &&
-    //     +sideA + +sideC >= +sideB &&
-    //     +sideB + +sideC >= +sideA
-    //   ) {
-    //     if (
-    //       parseInt(angleA) === 0 ||
-    //       parseInt(angleB) === 0 ||
-    //       parseInt(angleC) === 0
-    //     ) {
-    //       setMessage('One of the sides is too long to be a valid triangle.');
-    //     } else {
-    //       setMessage(
-    //         `These side lengths produce a valid ${triangle} triangle.`
-    //       );
-    //     }
-    //   } else {
-    //     setMessage('These sides do not produce a valid triangle.');
-    //   }
-    // }
-  }, [calculate, triangle, sideA, sideB, sideC, angleA, angleB, angleC]);
+  };
 
   const angleAnalysis = (angle, abc) => {
     const whichAngle = (angleType) => {
@@ -134,24 +129,31 @@ const Calculations = () => {
   };
 
   const inputAnalysis = (inputType) => {
+    console.log('inputAnalysis');
     switch (inputType) {
       case 'sideA':
         setSideA(document.getElementById(inputType).value);
+        originalInput[0] = document.getElementById(inputType).value;
         break;
       case 'sideB':
         setSideB(document.getElementById(inputType).value);
+        originalInput[1] = document.getElementById(inputType).value;
         break;
       case 'sideC':
         setSideC(document.getElementById(inputType).value);
+        originalInput[2] = document.getElementById(inputType).value;
         break;
       case 'angleA':
         setAngleA(document.getElementById(inputType).value);
+        originalInput[3] = document.getElementById(inputType).value;
         break;
       case 'angleB':
         setAngleB(document.getElementById(inputType).value);
+        originalInput[4] = document.getElementById(inputType).value;
         break;
       case 'angleC':
         setAngleC(document.getElementById(inputType).value);
+        originalInput[5] = document.getElementById(inputType).value;
         break;
       default:
         return;
@@ -159,14 +161,6 @@ const Calculations = () => {
   };
 
   const missingData = () => {
-    // console.log('sa: ', sideA);
-    // console.log('sb: ', sideB);
-    // console.log('sc: ', sideC);
-
-    // console.log('aa: ', angleA);
-    // console.log('ab: ', angleB);
-    // console.log('ac: ', angleC);
-
     const data =
       // all three
       sideA !== '' &&
@@ -313,8 +307,6 @@ const Calculations = () => {
         ? 'CAc'
         : null;
 
-    // console.log('data: ', data);
-
     switch (data) {
       // all three
       case 'abc':
@@ -325,59 +317,59 @@ const Calculations = () => {
         break;
       // two sides
       case 'abA':
-        SSA(sideA, sideB, angleA);
+        SSA(sideA, sideB, angleA, data);
         break;
       case 'bAc':
-        SAS(sideB, angleA, sideC);
+        SAS(sideB, angleA, sideC, data);
         break;
       case 'acA':
-        SSA(sideA, sideC, angleA);
+        SSA(sideA, sideC, angleA, data);
         break;
       case 'baB':
-        SSA(sideB, sideA, angleB);
+        SSA(sideB, sideA, angleB, data);
         break;
       case 'bcB':
-        SSA(sideB, sideC, angleB);
+        SSA(sideB, sideC, angleB, data);
         break;
       case 'cBa':
-        SAS(sideC, angleB, sideA);
+        SAS(sideC, angleB, sideA, data);
         break;
       case 'aCb':
-        SAS(sideA, angleC, sideB);
+        SAS(sideA, angleC, sideB, data);
         break;
       case 'cbC':
-        SSA(sideC, sideB, angleC);
+        SSA(sideC, sideB, angleC, data);
         break;
       case 'caC':
-        SSA(sideC, sideA, angleC);
+        SSA(sideC, sideA, angleC, data);
         break;
       // one side
       case 'ABa':
-        AAS(angleA, angleB, sideA);
+        AAS(angleA, angleB, sideA, data);
         break;
       case 'BaC':
-        ASA(angleB, sideA, angleC);
+        ASA(angleB, sideA, angleC, data);
         break;
       case 'ACa':
-        AAS(angleA, angleC, sideA);
+        AAS(angleA, angleC, sideA, data);
         break;
       case 'BAb':
-        AAS(angleB, angleA, sideB);
+        AAS(angleB, angleA, sideB, data);
         break;
       case 'BCb':
-        AAS(angleB, angleC, sideB);
+        AAS(angleB, angleC, sideB, data);
         break;
       case 'CbA':
-        ASA(angleC, sideB, angleA);
+        ASA(angleC, sideB, angleA, data);
         break;
       case 'AcB':
-        ASA(angleA, sideC, angleB);
+        ASA(angleA, sideC, angleB, data);
         break;
       case 'CBc':
-        AAS(angleC, angleB, sideC);
+        AAS(angleC, angleB, sideC, data);
         break;
       case 'CAc':
-        AAS(angleC, angleA, sideC);
+        AAS(angleC, angleA, sideC, data);
         break;
       default:
         setMessage(
@@ -387,49 +379,21 @@ const Calculations = () => {
     }
   };
 
-  const setCalculation = (match, comparison, calculation, set) => {
-    const optionA = comparison === 'side' ? sideA : angleA;
-    const optionB = comparison === 'side' ? sideB : angleB;
-    const optionC = comparison === 'side' ? sideC : angleC;
+  const setCalculation = (match, comparison, calculation, set, exactMatch) => {
+    let optionA = comparison === 'side' ? sideA : angleA;
+    let optionB = comparison === 'side' ? sideB : angleB;
+    let optionC = comparison === 'side' ? sideC : angleC;
 
-    if (match === optionA) {
+    if (exactMatch === 'a' || match === optionA) {
       set === 'side' ? setSideA(calculation) : setAngleA(calculation);
-    } else if (match === optionB) {
+      console.log(optionA);
+    } else if (exactMatch === 'b' || match === optionB) {
       set === 'side' ? setSideB(calculation) : setAngleB(calculation);
-    } else if (match === optionC) {
+      console.log(optionB);
+    } else if (exactMatch === 'c' || match === optionC) {
       set === 'side' ? setSideC(calculation) : setAngleC(calculation);
+      console.log(optionC);
     }
-
-    console.log('option: ', optionB, 'match: ', match);
-    console.log('a: ', optionA === match);
-    console.log('b: ', optionB === match);
-    console.log('c: ', optionC === match);
-
-    console.log(
-      'a: ',
-      sideA,
-      'b: ',
-      sideB,
-      'c: ',
-      sideC,
-      'A: ',
-      angleA,
-      'B: ',
-      angleB,
-      'C: ',
-      angleC
-    );
-
-    console.log(
-      'match: ',
-      match,
-      'comparison: ',
-      comparison,
-      'calculation: ',
-      calculation,
-      'set: ',
-      set
-    );
   };
 
   const toRad = Math.PI / 180;
@@ -437,25 +401,21 @@ const Calculations = () => {
 
   const angleLawOfSines = (side1, angle1, side2) => {
     console.log('angleLawOfSines');
-    console.log(side1);
-    console.log(angle1);
-    console.log(side2);
-    console.log(
-      'answer: ',
+
+    return (
       Math.asin((Math.sin(angle1 * toRad) * side1) / side2) * toDeg
-    );
-    return Math.asin((Math.sin(angle1 * toRad) * side1) / side2) * toDeg;
+    ).toFixed(2);
   };
 
   const angleLowOfCosines = (side1, side2, side3) => {
     return (
       Math.acos((side2 ** 2 + side3 ** 2 - side1 ** 2) / (2 * side2 * side3)) *
       toDeg
-    );
+    ).toFixed(2);
   };
 
   const AA = (angle1, angle2) => {
-    return 180 - angle1 - angle2;
+    return (180 - angle1 - angle2).toFixed(2);
   };
 
   const sideLawOfCosine = (side1, side2, angle3) => {
@@ -464,13 +424,17 @@ const Calculations = () => {
 
     return Math.sqrt(
       side1 ** 2 + side2 ** 2 - 2 * side1 * side2 * Math.cos(angle3 * toRad)
-    );
+    ).toFixed(2);
   };
 
   const sideLawOfSine = (side1, angle1, angle2) => {
     console.log('sideLawOfSine');
     // already checked
-    return (Math.sin(angle2 * toRad) * side1) / Math.sin(angle1 * toRad);
+
+    return (
+      (Math.sin(angle2 * toRad) * side1) /
+      Math.sin(angle1 * toRad)
+    ).toFixed(2);
   };
 
   const SSS = () => {
@@ -489,82 +453,132 @@ const Calculations = () => {
   const SAS = (side1, angle, side2) => {
     console.log('SAS');
 
+    let angle2 =
+      angle === angleA
+        ? 'b'
+        : angle === angleB
+        ? 'c'
+        : angle === angleC
+        ? 'a'
+        : null;
+    let angle3 =
+      angle === angleA
+        ? 'c'
+        : angle === angleB
+        ? 'a'
+        : angle === angleC
+        ? 'b'
+        : null;
+
     const missingSide = sideLawOfCosine(side1, side2, angle);
     const missingAngle1 = angleLawOfSines(side1, angle, missingSide);
     const missingAngle2 = AA(angle, missingAngle1);
     setCalculation('', 'side', missingSide, 'side');
-    setCalculation(side1, 'side', missingAngle1, 'angle');
-    setCalculation(side2, 'side', missingAngle2, 'angle');
+    setCalculation(null, 'exact', missingAngle1, 'angle', angle2);
+    setCalculation(null, 'exact', missingAngle2, 'angle', angle3);
   };
 
   const SSA = (side1, side2, angle) => {
     console.log('SSA');
 
+    let angle2 =
+      angle === angleA
+        ? 'b'
+        : angle === angleB
+        ? 'a'
+        : angle === angleC
+        ? 'b'
+        : null;
+    let angle3 =
+      angle === angleA
+        ? 'b'
+        : angle === angleB
+        ? 'c'
+        : angle === angleC
+        ? 'a'
+        : null;
+
     const missingAngle1 = angleLawOfSines(side2, angle, side1);
     const missingAngle2 = AA(angle, missingAngle1);
     const missingSide = sideLawOfSine(side1, angle, missingAngle2);
-    setCalculation(side2, 'side', missingAngle1, 'angle');
+    setCalculation(null, 'exact', missingAngle1, 'angle', angle2);
     setCalculation('', 'side', missingSide, 'side');
-    setCalculation('', 'angle', missingAngle2, 'angle');
+    setCalculation(null, 'exact', missingAngle2, 'angle', angle3);
   };
 
   const AAS = (angle1, angle2, side) => {
     console.log('AAS');
 
+    let side2 =
+      side === sideA ? 'b' : side === sideB ? 'c' : side === sideC ? 'a' : null;
+    let side3 =
+      side === sideA ? 'c' : side === sideB ? 'a' : side === sideC ? 'b' : null;
+
     const missingAngle = AA(angle1, angle2);
     const missingSide1 = sideLawOfSine(side, angle1, angle2);
     const missingSide2 = sideLawOfCosine(missingSide1, side, missingAngle);
     setCalculation('', 'angle', missingAngle, 'angle');
-    setCalculation(angle2, 'angle', missingSide1, 'side');
-    setCalculation('', 'angle', missingSide2, 'side');
+    setCalculation(null, 'exact', missingSide1, 'side', side2);
+    setCalculation(null, 'exact', missingSide2, 'side', side3);
   };
 
   const ASA = (angle1, side, angle2) => {
     console.log('ASA');
 
+    let side2 =
+      side === sideA ? 'b' : side === sideB ? 'c' : side === sideC ? 'a' : null;
+    let side3 =
+      side === sideA ? 'c' : side === sideB ? 'a' : side === sideC ? 'b' : null;
+
     const missingAngle = AA(angle1, angle2);
     const missingSide1 = sideLawOfSine(side, missingAngle, angle2);
     const missingSide2 = sideLawOfCosine(missingSide1, side, angle1);
     setCalculation('', 'angle', missingAngle, 'angle');
-    setCalculation(angle2, 'angle', missingSide1, 'side');
-    setCalculation(angle1, 'angle', missingSide2, 'side');
+    setCalculation(null, 'exact', missingSide1, 'side', side2);
+    setCalculation(null, 'exact', missingSide2, 'side', side3);
+  };
+
+  const onChange = (inputData) => {
+    let emptyArr = triangle1.filter((empty) => empty === '').length;
+
+    console.log(emptyArr);
+
+    setTriangle1([
+      document.getElementById('sideA').value,
+      document.getElementById('sideB').value,
+      document.getElementById('sideC').value,
+      document.getElementById('angleA').value,
+      document.getElementById('angleB').value,
+      document.getElementById('angleC').value,
+    ]);
+
+    if (emptyArr === 4) {
+      setSideA(document.getElementById('sideA').value);
+      setSideB(document.getElementById('sideB').value);
+      setSideC(document.getElementById('sideC').value);
+      setAngleA(document.getElementById('angleA').value);
+      setAngleB(document.getElementById('angleB').value);
+      setAngleC(document.getElementById('angleC').value);
+
+      // inputAnalysis(inputData);
+      setCalculate(calculate + 1);
+      console.log('calculate: ', calculate);
+    }
+
+    // triangleData();
   };
 
   return (
     <div>
       <InputGroup
-        onChangeSideA={() =>
-          window.setTimeout(function () {
-            inputAnalysis('sideA');
-          }, 2)
-        }
-        onChangeSideB={() =>
-          window.setTimeout(function () {
-            inputAnalysis('sideB');
-          }, 2)
-        }
-        onChangeSideC={() =>
-          window.setTimeout(function () {
-            inputAnalysis('sideC');
-          }, 2)
-        }
-        onChangeAngleA={() =>
-          window.setTimeout(function () {
-            inputAnalysis('angleA');
-          }, 2)
-        }
+        onChangeSideA={() => onChange('sideA')}
+        onChangeSideB={() => onChange('sideB')}
+        onChangeSideC={() => onChange('sideC')}
+        onChangeAngleA={() => onChange('angleA')}
         messageAngleA={angleAtype}
-        onChangeAngleB={() =>
-          window.setTimeout(function () {
-            inputAnalysis('angleB');
-          }, 2)
-        }
+        onChangeAngleB={() => onChange('angleB')}
         messageAngleB={angleBtype}
-        onChangeAngleC={() =>
-          window.setTimeout(function () {
-            inputAnalysis('angleC');
-          }, 2)
-        }
+        onChangeAngleC={() => onChange('angleC')}
         messageAngleC={angleCtype}
       />
 
@@ -597,8 +611,7 @@ const Calculations = () => {
       <CalculateButton
         onClick={() => {
           // reset();
-          calculate === 1 ? setCalculate(0) : setCalculate(1);
-          missingData();
+          setCalculate(calculate + 1);
         }}
       />
       <br />
