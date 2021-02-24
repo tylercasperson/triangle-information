@@ -15,9 +15,10 @@ const Calculations = () => {
   const [angleBtype, setAngleBtype] = useState('');
   const [angleCtype, setAngleCtype] = useState('');
 
+  const [calculate, setCalculate] = useState(0);
+
   const [triangle, setTriangle] = useState('');
   const [message, setMessage] = useState('');
-  const [calculate, setCalculate] = useState(0);
 
   const [originalInput, setOriginalInput] = useState(['', '', '', '', '', '']);
   const [triangle1, setTriangle1] = useState(['', '', '', '', '', '']);
@@ -47,12 +48,10 @@ const Calculations = () => {
 
     whichTriangle();
 
-    console.log('hereL ', triangle1);
-  }, [calculate]);
+    console.log('oI: ', originalInput);
+  }, [calculate, angleA, angleB, angleC]);
 
-  //triangle, angleA, angleB, angleC
-
-  const whichTriangle = () => {
+  const whichTriangle = (triangleArr) => {
     if (sideA === sideB && sideA === sideC && sideB === sideC) {
       setTriangle('Equilateral');
     } else if (sideA !== sideB && sideA !== sideC && sideB !== sideC) {
@@ -60,10 +59,6 @@ const Calculations = () => {
     } else {
       setTriangle('Isosceles');
     }
-
-    angleAnalysis(parseInt(angleA), 'A');
-    angleAnalysis(parseInt(angleB), 'B');
-    angleAnalysis(parseInt(angleC), 'C');
 
     console.log('t1: ', triangle1);
     if (triangle1.length === 6) {
@@ -110,7 +105,10 @@ const Calculations = () => {
   };
 
   const angleAnalysis = (angle, abc) => {
+    console.log('angleAnalysis');
+    console.log('angle: ', angle);
     const whichAngle = (angleType) => {
+      console.log('whichAngle');
       if (abc === 'A') {
         setAngleAtype(angleType);
       } else if (abc === 'B') {
@@ -125,38 +123,6 @@ const Calculations = () => {
       whichAngle('Acute angle');
     } else if (angle > 90) {
       whichAngle('Obtuse angle');
-    }
-  };
-
-  const inputAnalysis = (inputType) => {
-    console.log('inputAnalysis');
-    switch (inputType) {
-      case 'sideA':
-        setSideA(document.getElementById(inputType).value);
-        originalInput[0] = document.getElementById(inputType).value;
-        break;
-      case 'sideB':
-        setSideB(document.getElementById(inputType).value);
-        originalInput[1] = document.getElementById(inputType).value;
-        break;
-      case 'sideC':
-        setSideC(document.getElementById(inputType).value);
-        originalInput[2] = document.getElementById(inputType).value;
-        break;
-      case 'angleA':
-        setAngleA(document.getElementById(inputType).value);
-        originalInput[3] = document.getElementById(inputType).value;
-        break;
-      case 'angleB':
-        setAngleB(document.getElementById(inputType).value);
-        originalInput[4] = document.getElementById(inputType).value;
-        break;
-      case 'angleC':
-        setAngleC(document.getElementById(inputType).value);
-        originalInput[5] = document.getElementById(inputType).value;
-        break;
-      default:
-        return;
     }
   };
 
@@ -386,13 +352,10 @@ const Calculations = () => {
 
     if (exactMatch === 'a' || match === optionA) {
       set === 'side' ? setSideA(calculation) : setAngleA(calculation);
-      console.log(optionA);
     } else if (exactMatch === 'b' || match === optionB) {
       set === 'side' ? setSideB(calculation) : setAngleB(calculation);
-      console.log(optionB);
     } else if (exactMatch === 'c' || match === optionC) {
       set === 'side' ? setSideC(calculation) : setAngleC(calculation);
-      console.log(optionC);
     }
   };
 
@@ -420,7 +383,6 @@ const Calculations = () => {
 
   const sideLawOfCosine = (side1, side2, angle3) => {
     console.log('sideLawOfCosine');
-    // already checked
 
     return Math.sqrt(
       side1 ** 2 + side2 ** 2 - 2 * side1 * side2 * Math.cos(angle3 * toRad)
@@ -429,7 +391,6 @@ const Calculations = () => {
 
   const sideLawOfSine = (side1, angle1, angle2) => {
     console.log('sideLawOfSine');
-    // already checked
 
     return (
       (Math.sin(angle2 * toRad) * side1) /
@@ -538,29 +499,34 @@ const Calculations = () => {
     setCalculation(null, 'exact', missingSide2, 'side', side3);
   };
 
-  const onChange = (inputData) => {
-    let emptyArr = triangle1.filter((empty) => empty === '').length;
+  const onChange = () => {
+    let emptyArr = originalInput.filter((empty) => empty === '').length;
 
-    console.log(emptyArr);
+    let angleOne = document.getElementById('angleA').value;
+    let angleTwo = document.getElementById('angleB').value;
+    let angleThree = document.getElementById('angleC').value;
 
-    setTriangle1([
+    setOriginalInput([
       document.getElementById('sideA').value,
       document.getElementById('sideB').value,
       document.getElementById('sideC').value,
-      document.getElementById('angleA').value,
-      document.getElementById('angleB').value,
-      document.getElementById('angleC').value,
+      angleOne,
+      angleTwo,
+      angleThree,
     ]);
 
-    if (emptyArr === 4) {
+    angleAnalysis(parseInt(angleOne), 'A');
+    angleAnalysis(parseInt(angleTwo), 'B');
+    angleAnalysis(parseInt(angleThree), 'C');
+
+    if (emptyArr <= 4) {
       setSideA(document.getElementById('sideA').value);
       setSideB(document.getElementById('sideB').value);
       setSideC(document.getElementById('sideC').value);
-      setAngleA(document.getElementById('angleA').value);
-      setAngleB(document.getElementById('angleB').value);
-      setAngleC(document.getElementById('angleC').value);
+      setAngleA(angleOne);
+      setAngleB(angleTwo);
+      setAngleC(angleThree);
 
-      // inputAnalysis(inputData);
       setCalculate(calculate + 1);
       console.log('calculate: ', calculate);
     }
@@ -571,14 +537,14 @@ const Calculations = () => {
   return (
     <div>
       <InputGroup
-        onChangeSideA={() => onChange('sideA')}
-        onChangeSideB={() => onChange('sideB')}
-        onChangeSideC={() => onChange('sideC')}
-        onChangeAngleA={() => onChange('angleA')}
+        onChangeSideA={() => onChange()}
+        onChangeSideB={() => onChange()}
+        onChangeSideC={() => onChange()}
+        onChangeAngleA={() => onChange()}
         messageAngleA={angleAtype}
-        onChangeAngleB={() => onChange('angleB')}
+        onChangeAngleB={() => onChange()}
         messageAngleB={angleBtype}
-        onChangeAngleC={() => onChange('angleC')}
+        onChangeAngleC={() => onChange()}
         messageAngleC={angleCtype}
       />
 
