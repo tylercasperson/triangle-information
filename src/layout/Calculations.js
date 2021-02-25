@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import InputGroup from './InputGroup';
 import MessageGroup from './MessageGroup';
 import CalculateButton from './CalculateButton';
+import Drawing from './Drawing';
 
 const Calculations = () => {
   const [sideA, setSideA] = useState('');
@@ -51,7 +52,7 @@ const Calculations = () => {
     console.log('oI: ', originalInput);
   }, [calculate, angleA, angleB, angleC]);
 
-  const whichTriangle = (triangleArr) => {
+  const whichTriangle = () => {
     if (sideA === sideB && sideA === sideC && sideB === sideC) {
       setTriangle('Equilateral');
     } else if (sideA !== sideB && sideA !== sideC && sideB !== sideC) {
@@ -60,7 +61,6 @@ const Calculations = () => {
       setTriangle('Isosceles');
     }
 
-    console.log('t1: ', triangle1);
     if (triangle1.length === 6) {
       if (
         +sideA + +sideB >= +sideC &&
@@ -547,6 +547,15 @@ const Calculations = () => {
         onChangeAngleC={() => onChange()}
         messageAngleC={angleCtype}
       />
+      <br />
+      <Drawing
+        x1={triangle1[0]}
+        y1={100}
+        x2={triangle1[1]}
+        y2={200}
+        x3={triangle1[2]}
+        y3={300}
+      />
 
       {parseInt(angleA) === 0 ||
       parseInt(angleB) === 0 ||
@@ -582,8 +591,7 @@ const Calculations = () => {
       />
       <br />
       <br />
-      {/* <textarea rows='30' cols='40'></textarea>
-      <div */}
+
       <div>
         SSA; ['',8,13,'',31,''] [15.52,8,13,92.2,31,56.8] SAS; ['',5,7,49,'','']
         [5.3,5,7,49,45.4,85.6] AAS; ['','',7,35,'',62] [4.55,7.87,7,35,83,62]
