@@ -56,7 +56,7 @@ const Calculations = () => {
     if (sideA === sideB && sideA === sideC && sideB === sideC) {
       setTriangle('Equilateral');
     } else if (sideA !== sideB && sideA !== sideC && sideB !== sideC) {
-      setTriangle('Scaleneal');
+      setTriangle('scalene');
     } else {
       setTriangle('Isosceles');
     }
@@ -84,6 +84,9 @@ const Calculations = () => {
     } else {
       setMessage('More data is needed.');
     }
+    triangleData();
+
+    anotherTriangle();
   };
 
   const triangleData = () => {
@@ -100,7 +103,8 @@ const Calculations = () => {
     // setAngleA(originalInput[3]);
     // setAngleB(originalInput[4]);
     // setAngleC(originalInput[5]);
-    // setTriangle1([sideA, sideB, sideC, angleA, angleB, angleC]);
+    setTriangle1([sideA, sideB, sideC, angleA, angleB, angleC]);
+    trianglePlots(triangle1);
     // }
   };
 
@@ -499,6 +503,38 @@ const Calculations = () => {
     setCalculation(null, 'exact', missingSide2, 'side', side3);
   };
 
+  const trianglePlots = (arr) => {
+    // let x1 = sideC;
+    // let y1 = 0;
+    // let x2 = 0;
+    // let y2 = 0;
+    // let x3 = sideLawOfSine(sideA, 90, 180 - 90 - angleB);
+    // let y3 = sideLawOfSine(sideA, 90, angleB);
+
+    // a , 90 , 180-90-B
+    // let height = sideLawOfSine(15.52, 90, 59); //x
+    let height = sideLawOfSine(50, 90, 180 - 90 - 133); //x
+    // a , 90 , B
+    // let abc = sideLawOfSine(15.52, 90, 31); //y
+    let abc = sideLawOfSine(50, 90, 133); //y
+
+    console.log('x: ', height);
+    console.log('y: ', abc);
+  };
+
+  const anotherTriangle = () => {
+    // setTriangle2([
+    //   originalInput[0],
+    //   originalInput[1],
+    //   originalInput[2],
+    //   180 - triangle1[3],
+    //   triangle1[4],
+    //   triangle1[5],
+    // ]);
+
+    console.log('t2: ', triangle2);
+  };
+
   const onChange = () => {
     let emptyArr = originalInput.filter((empty) => empty === '').length;
 
@@ -528,10 +564,7 @@ const Calculations = () => {
       setAngleC(angleThree);
 
       setCalculate(calculate + 1);
-      console.log('calculate: ', calculate);
     }
-
-    // triangleData();
   };
 
   return (
@@ -548,13 +581,14 @@ const Calculations = () => {
         messageAngleC={angleCtype}
       />
       <br />
+
       <Drawing
-        x1={triangle1[0]}
-        y1={100}
-        x2={triangle1[1]}
-        y2={200}
-        x3={triangle1[2]}
-        y3={300}
+        x1={sideC}
+        y1={0}
+        x2={0}
+        y2={0}
+        // x3={sideLawOfSine(sideA, 90, 180 - 90 - angleB)}
+        // y3={sideLawOfSine(sideA, 90, angleB)}
       />
 
       {parseInt(angleA) === 0 ||
@@ -591,7 +625,6 @@ const Calculations = () => {
       />
       <br />
       <br />
-
       <div>
         SSA; ['',8,13,'',31,''] [15.52,8,13,92.2,31,56.8] SAS; ['',5,7,49,'','']
         [5.3,5,7,49,45.4,85.6] AAS; ['','',7,35,'',62] [4.55,7.87,7,35,83,62]
