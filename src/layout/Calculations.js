@@ -45,7 +45,7 @@ const Calculations = () => {
 
   useEffect(() => {
     missingData();
-    logValues();
+    // logValues();
 
     whichTriangle();
 
@@ -105,6 +105,7 @@ const Calculations = () => {
     // setAngleC(originalInput[5]);
     setTriangle1([sideA, sideB, sideC, angleA, angleB, angleC]);
     trianglePlots(triangle1);
+
     // }
   };
 
@@ -587,8 +588,8 @@ const Calculations = () => {
         y1={0}
         x2={0}
         y2={0}
-        // x3={sideLawOfSine(sideA, 90, 180 - 90 - angleB)}
-        // y3={sideLawOfSine(sideA, 90, angleB)}
+        x3={sideLawOfSine(sideA, 90, 180 - 90 - angleB)}
+        y3={sideLawOfSine(sideA, 90, angleB)}
       />
 
       {parseInt(angleA) === 0 ||
