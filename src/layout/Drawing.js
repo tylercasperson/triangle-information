@@ -8,18 +8,23 @@ const Drawing = (props) => {
       let context = canvasRef.current.getContext('2d');
       context.clearRect(0, 0, context.canvas.width, context.canvas.height);
 
-      //   let x1 = props.x1;
-      //   let x2 = props.x2;
-      //   let x3 = props.x3;
-      //   let y1 = props.y1;
-      //   let y2 = props.y2;
-      //   let y3 = props.y3;
+      // let x1 = props.x1;
+      // let x2 = props.x2;
+      // let x3 = props.x3;
+      // let y1 = props.y1;
+      // let y2 = props.y2;
+      // let y3 = props.y3;
 
-      //   console.log('y3: ', y3);
+      let triangleWidth = 13;
+      let triangleHeight = 6.69;
+      let widthToTop = 11.4;
+      let missingCoordinate = 3.12;
 
-      let triangleWidth = 50 / 2;
-      let triangleHeight = 43.3 / 2;
-      let widthToTop = 25 / 2;
+      console.log('averageX: ', 7 / 3);
+
+      // let triangleWidth = 50 / 2;
+      // let triangleHeight = 43.3 / 2;
+      // let widthToTop = 25 / 2;
 
       let aspectRatio = Math.min(
         320 / (triangleWidth * 0.7),

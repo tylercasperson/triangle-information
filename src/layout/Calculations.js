@@ -504,6 +504,24 @@ const Calculations = () => {
     setCalculation(null, 'exact', missingSide2, 'side', side3);
   };
 
+  const missingCoordinate = (side, x, y) => {
+    return Math.sqrt(x ** 2 - side ** 2 - y ** 2);
+  };
+
+  console.log('missingX = ', missingCoordinate(8, 13, 7.994));
+  console.log(
+    'missingX = ',
+    missingCoordinate(8, 13, sideLawOfSine(8, 90, 92.2))
+  );
+
+  console.log('missingXx = ', missingCoordinate(5, 7, 3.774));
+  console.log(
+    'missingXxx = ',
+    missingCoordinate(8, 13, sideLawOfSine(7, 90, 45.4))
+  );
+
+  console.log('missingY: ', sideLawOfSine(8, 90, 92.2));
+
   const trianglePlots = (arr) => {
     // let x1 = sideC;
     // let y1 = 0;
@@ -584,12 +602,14 @@ const Calculations = () => {
       <br />
 
       <Drawing
-        x1={sideC}
-        y1={0}
-        x2={0}
-        y2={0}
-        x3={sideLawOfSine(sideA, 90, 180 - 90 - angleB)}
-        y3={sideLawOfSine(sideA, 90, angleB)}
+        triangleWidth={sideC}
+        widthToTop={sideLawOfSine(sideA, 90, 180 - 90 - angleB)}
+        triangleHeight={sideLawOfSine(sideA, 90, angleB)}
+        missingX={missingCoordinate(
+          sideB,
+          sideC,
+          sideLawOfSine(sideB, 90, angleA)
+        )}
       />
 
       {parseInt(angleA) === 0 ||
